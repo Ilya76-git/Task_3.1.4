@@ -4,8 +4,9 @@
     <title>Spring Security Example</title>
 </head>
 <body>
-<h1>User, welcome spring boot security page!</h1>
-
-
+<h1>Successful authorization</h1>
+<h2>Your data:</h2>
+<h3 th:inline="text">Username: [[${#httpServletRequest.remoteUser}]]</h3>
+    <p><a th:href="@{/logout}">Sign Out</a>
 </body>
 </html>
