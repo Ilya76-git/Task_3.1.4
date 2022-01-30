@@ -6,7 +6,28 @@
 <body>
 <h1>Successful authorization</h1>
 <h2>Your data:</h2>
-<h3 th:inline="text">Username: [[${#httpServletRequest.remoteUser}]]</h3>
+<div>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Age</th>
+            <th>Email</th>
+            <th>Roles</th>
+        </tr>
+            <td th:text="${user.getId()}"/>
+            <td th:text="${user.getName()}"/>
+            <td th:text="${user.getLastname()}"/>
+            <td th:text="${user.getAge()}"/>
+            <td th:text="${user.getUsername()}"/>
+            <td>
+                <div th:each="role : ${user.getRoles()}">
+                    <p th:text="${role.getName()}">
+                </div>
+            </td>
+    </table>
+</div>
     <p><a th:href="@{/logout}">Sign Out</a>
 </body>
 </html>

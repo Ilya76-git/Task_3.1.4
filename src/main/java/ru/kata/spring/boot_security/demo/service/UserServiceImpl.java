@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,14 +12,14 @@ import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserDetailsService,UserService {
 
     private final UserRepository userRepository;
-
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     public UserServiceImpl(UserRepository userRepository){
         this.userRepository=userRepository;
@@ -36,8 +37,15 @@ public class UserServiceImpl implements UserDetailsService,UserService {
 
     @Override
     public void createUser(User user) {
-        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
-        user.setPassword("{noop}" + user.getPassword());
+        if(user.getRole().equals("ADMIN")){
+            Set<Role> roleSet = new LinkedHashSet<>();
+            roleSet.add(new Role(1L, "ROLE_USER"));
+            roleSet.add(new Role(2L, "ROLE_ADMIN"));
+            user.setRoles(roleSet);
+        } else {
+            user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
+        }
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -53,6 +61,6 @@ public class UserServiceImpl implements UserDetailsService,UserService {
 
     @Override
     public void updateUser(User user) {
-        userRepository.save(user);
+        createUser(user);
     }
 }
