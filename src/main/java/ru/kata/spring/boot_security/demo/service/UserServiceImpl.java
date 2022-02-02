@@ -61,6 +61,6 @@ public class UserServiceImpl implements UserDetailsService,UserService {
 
     @Override
     public void updateUser(User user) {
-        createUser(user);
+         createUser(user);
     }
 }

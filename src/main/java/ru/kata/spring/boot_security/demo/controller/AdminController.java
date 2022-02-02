@@ -20,33 +20,25 @@ public class AdminController {
     private UserService userService;
 
     @GetMapping()
-    public String getAllUsers(ModelMap modelMap){
+    public String getAllUsers(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,ModelMap modelMap){
         modelMap.addAttribute("users",userService.allUsers());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         modelMap.addAttribute("usera",(User)auth.getPrincipal());
         return "admin";
     }
-    @GetMapping("/add")
-    public String addPage(@ModelAttribute("user") User user){
-        return "adduser";
-    }
     @PostMapping("/add")
     public String addUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult){
         if (bindingResult.hasErrors())
-            return "adduser";
+            return "admin";
 
         userService.createUser(user);
         return "redirect:/admin";
     }
-    @GetMapping("/edit")
-    public String editPage(@RequestParam(value = "id") long id, ModelMap modelMap){
-        modelMap.addAttribute("user",userService.readUser(id));
-        return "editpage";
-    }
+
     @PostMapping("/edit")
     public String editUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult){
         if(bindingResult.hasErrors())
-            return "editpage";
+            return "redirect:/admin";
         userService.updateUser(user);
         return "redirect:/admin";
     }
@@ -54,5 +46,10 @@ public class AdminController {
     public String deleteUser(@RequestParam(value = "id") long id){
         userService.deleteUser(userService.readUser(id));
         return "redirect:/admin";
+    }
+    @GetMapping("/findOne")
+    @ResponseBody
+    public User findOne(Long id){
+        return userService.readUser(id);
     }
 }
