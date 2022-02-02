@@ -50,8 +50,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("email") // Указываем параметры логина и пароля с формы логина
                 .passwordParameter("password");
 
-            http.logout()
-                    .permitAll();
+        http
+                .logout()
+                .permitAll();
     }
 
     @Autowired

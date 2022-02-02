@@ -51,10 +51,55 @@ public class User implements UserDetails {
         this.id = id;
     }
 
+    public String getName(){ return name; }
+
+    public void setName(String name) { this.name = name; }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
     @Override
     public String getUsername() {
         return username;
     }
+
+    public void setUsername(String email) {
+        this.username = email;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public String getRole() { return role; }
+
+    public void setRole(String role) { this.role = role; }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -76,59 +121,10 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
 
-    @Override
-    public String getPassword() {
-        return password;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-    public void setUsername(String email) {
-        this.username = email;
-    }
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 }

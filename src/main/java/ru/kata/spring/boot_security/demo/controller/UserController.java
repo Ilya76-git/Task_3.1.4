@@ -15,7 +15,7 @@ public class UserController {
     @GetMapping("/user")
     public String getUser(ModelMap map){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-         map.addAttribute("user",(User)auth.getPrincipal());
+        map.addAttribute("user",(User)auth.getPrincipal());
         return "user";
     }
 }

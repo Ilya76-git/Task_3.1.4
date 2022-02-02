@@ -28,9 +28,9 @@ public class AdminController {
     }
     @PostMapping("/add")
     public String addUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult){
-        if (bindingResult.hasErrors())
+        if (bindingResult.hasErrors()) {
             return "admin";
-
+        }
         userService.createUser(user);
         return "redirect:/admin";
     }
